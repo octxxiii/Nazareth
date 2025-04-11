@@ -1,0 +1,31 @@
+﻿package 1
+
+import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import 1.databinding.Activity{{ screen_name }}Binding
+
+@AndroidEntryPoint
+class {{ screen_name }}Activity : AppCompatActivity() {
+
+    private lateinit var binding: Activity{{ screen_name }}Binding
+    private val viewModel: {{ screen_name }}ViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = Activity{{ screen_name }}Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+        
+        setupViews()
+        observeViewModel()
+    }
+
+    private fun setupViews() {
+        // TODO: View setup code here
+    }
+
+    private fun observeViewModel() {
+        // TODO: ViewModel observation code here
+    }
+} 
