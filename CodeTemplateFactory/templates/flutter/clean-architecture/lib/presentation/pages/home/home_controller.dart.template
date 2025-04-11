@@ -1,0 +1,37 @@
+import 'package:get/get.dart';
+import 'package:{{ project_name }}/app/routes/app_routes.dart';
+import 'package:{{ project_name }}/domain/models/item.dart';
+import 'package:{{ project_name }}/domain/usecases/get_items_usecase.dart';
+
+class HomeController extends GetxController {
+  final GetItemsUseCase _getItemsUseCase;
+
+  HomeController(this._getItemsUseCase);
+
+  final RxList<Item> items = <Item>[].obs;
+  final RxBool isLoading = false.obs;
+  final RxString? error = RxString(null);
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadItems();
+  }
+
+  Future<void> loadItems() async {
+    try {
+      isLoading.value = true;
+      error.value = null;
+      final result = await _getItemsUseCase();
+      items.assignAll(result);
+    } catch (e) {
+      error.value = e.toString();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void onItemTap(Item item) {
+    Get.toNamed(AppRoutes.DETAIL, arguments: item);
+  }
+} 

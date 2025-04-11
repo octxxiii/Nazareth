@@ -1,0 +1,22 @@
+package {{ package_name }}
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MainRepository @Inject constructor(
+    private val apiService: ApiService,
+    private val localDataSource: LocalDataSource
+) {
+    suspend fun getData(): List<Any> = withContext(Dispatchers.IO) {
+        try {
+            // API 호출 시도
+            apiService.getData()
+        } catch (e: Exception) {
+            // API 실패 시 로컬 데이터 반환
+            localDataSource.getData()
+        }
+    }
+} 

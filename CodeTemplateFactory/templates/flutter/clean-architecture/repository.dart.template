@@ -1,0 +1,12 @@
+abstract class {{ screen_name }}Repository {
+  Future<String> fetchData();
+}
+
+class {{ screen_name }}RepositoryImpl implements {{ screen_name }}Repository {
+  @override
+  Future<String> fetchData() async {
+    // TODO: Implement actual data fetching logic
+    await Future.delayed(const Duration(seconds: 1));
+    return 'Data from {{ screen_name }} repository';
+  }
+} 

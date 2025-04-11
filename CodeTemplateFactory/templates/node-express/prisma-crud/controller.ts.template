@@ -1,0 +1,24 @@
+import {Request, Response} from 'express';
+import {PrismaClient} from '@prisma/client';
+import {{ screen_name }}Service from './{{ screen_name }}Service';
+
+const prisma = new PrismaClient();
+const service = new {{ screen_name }}Service(prisma);
+
+export const create{{ screen_name }} = async (req: Request, res: Response) => {
+  try {
+    const {{ screen_name_lower }} = await service.create{{ screen_name }}(req.body, req.user.id);
+    res.status(201).json({{ screen_name_lower }});
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+};
+
+export const get{{ screen_name }}s = async (req: Request, res: Response) => {
+  try {
+    const {{ screen_name_lower }}s = await service.get{{ screen_name }}s(req.user.id);
+    res.json({{ screen_name_lower }}s);
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+}; 

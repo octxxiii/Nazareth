@@ -1,0 +1,13 @@
+import 'package:get/get.dart';
+import 'package:{{ project_name }}/data/repositories/item_repository_impl.dart';
+import 'package:{{ project_name }}/domain/usecases/get_items_usecase.dart';
+import 'package:{{ project_name }}/presentation/pages/home/home_controller.dart';
+
+class HomeBinding extends Bindings {
+  @override
+  void dependencies() {
+    final repository = ItemRepositoryImpl();
+    final useCase = GetItemsUseCase(repository);
+    Get.lazyPut(() => HomeController(useCase));
+  }
+} 

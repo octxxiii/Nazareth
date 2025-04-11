@@ -1,0 +1,28 @@
+from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+from .schemas import {{ screen_name }}Create, {{ screen_name }}Response
+from .service import {{ screen_name }}Service
+from .dependencies import get_current_user
+
+router = APIRouter(prefix="/{{ screen_name_lower }}", tags=["{{ screen_name }}"])
+
+@router.post("/", response_model={{ screen_name }}Response)
+async def create_{{ screen_name_lower }}(
+    {{ screen_name_lower }}: {{ screen_name }}Create,
+    service: {{ screen_name }}Service = Depends(),
+    current_user = Depends(get_current_user)
+):
+    try:
+        return await service.create_{{ screen_name_lower }}({{ screen_name_lower }}, current_user.id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/", response_model=List[{{ screen_name }}Response])
+async def get_{{ screen_name_lower }}s(
+    service: {{ screen_name }}Service = Depends(),
+    current_user = Depends(get_current_user)
+):
+    try:
+        return await service.get_{{ screen_name_lower }}s(current_user.id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e)) 

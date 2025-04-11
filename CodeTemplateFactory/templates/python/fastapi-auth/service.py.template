@@ -1,0 +1,19 @@
+from typing import List
+from sqlalchemy.orm import Session
+from .models import {{ screen_name }}
+from .schemas import {{ screen_name }}Create, {{ screen_name }}Response
+from .database import get_db
+
+class {{ screen_name }}Service:
+    def __init__(self, db: Session = Depends(get_db)):
+        self.db = db
+
+    async def create_{{ screen_name_lower }}(self, {{ screen_name_lower }}: {{ screen_name }}Create, user_id: int) -> {{ screen_name }}Response:
+        db_{{ screen_name_lower }} = {{ screen_name }}(**{{ screen_name_lower }}.dict(), user_id=user_id)
+        self.db.add(db_{{ screen_name_lower }})
+        self.db.commit()
+        self.db.refresh(db_{{ screen_name_lower }})
+        return db_{{ screen_name_lower }}
+
+    async def get_{{ screen_name_lower }}s(self, user_id: int) -> List[{{ screen_name }}Response]:
+        return self.db.query({{ screen_name }}).filter({{ screen_name }}.user_id == user_id).all() 

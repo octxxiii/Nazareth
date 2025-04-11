@@ -1,0 +1,17 @@
+import { takeLatest, put, call } from 'redux-saga/effects';
+import { fetchItems } from '../../services/api';
+import { Item } from '../types';
+
+function* fetchItemsSaga() {
+  try {
+    yield put({ type: 'FETCH_ITEMS_REQUEST' });
+    const items: Item[] = yield call(fetchItems);
+    yield put({ type: 'FETCH_ITEMS_SUCCESS', payload: items });
+  } catch (error) {
+    yield put({ type: 'FETCH_ITEMS_FAILURE', payload: error.message });
+  }
+}
+
+export default function* itemsSaga() {
+  yield takeLatest('FETCH_ITEMS', fetchItemsSaga);
+} 

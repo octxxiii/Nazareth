@@ -1,0 +1,9 @@
+class {{ screen_name }}Service {
+  static async fetchData(): Promise<string> {
+    // TODO: Implement actual API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return 'Data from {{ screen_name }} service';
+  }
+}
+
+export default {{ screen_name }}Service; 

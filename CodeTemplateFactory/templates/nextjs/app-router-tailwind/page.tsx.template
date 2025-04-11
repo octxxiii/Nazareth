@@ -1,0 +1,37 @@
+'use client';
+
+import {useEffect, useState} from 'react';
+import {use{{ screen_name }}Store} from '@/stores/{{ screen_name_lower }}Store';
+
+export default function {{ screen_name }}Page() {
+  const {data, isLoading, error, fetchData} = use{{ screen_name }}Store();
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="mb-8 text-3xl font-bold">{{ screen_name }} Page</h1>
+      <div className="rounded-lg bg-white p-6 shadow-md">
+        <p className="text-gray-700">{data || 'No data'}</p>
+      </div>
+    </div>
+  );
+} 

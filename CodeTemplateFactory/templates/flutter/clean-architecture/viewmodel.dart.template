@@ -1,0 +1,33 @@
+import 'package:flutter/foundation.dart';
+import '{{ screen_name }}_repository.dart';
+
+class {{ screen_name }}ViewModel extends ChangeNotifier {
+  final {{ screen_name }}Repository _repository;
+  
+  {{ screen_name }}ViewModel({required {{ screen_name }}Repository repository})
+      : _repository = repository;
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  String? _error;
+  String? get error => _error;
+
+  String? _data;
+  String? get data => _data;
+
+  Future<void> loadData() async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _data = await _repository.fetchData();
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+} 

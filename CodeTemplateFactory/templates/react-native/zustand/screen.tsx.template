@@ -1,0 +1,57 @@
+import React, {useEffect} from 'react';
+import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
+import use{{ screen_name }}Store from './use{{ screen_name }}Store';
+
+const {{ screen_name }}Screen = () => {
+  const {data, isLoading, error, fetchData} = use{{ screen_name }}Store();
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.error}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{{ screen_name }} Screen</Text>
+      <Text style={styles.data}>{data || 'No data'}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  data: {
+    fontSize: 16,
+  },
+  error: {
+    color: 'red',
+    fontSize: 16,
+  },
+});
+
+export default {{ screen_name }}Screen; 

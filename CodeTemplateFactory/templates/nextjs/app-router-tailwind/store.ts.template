@@ -1,0 +1,35 @@
+import {create} from 'zustand';
+import {devtools} from 'zustand/middleware';
+import {{ screen_name }}Service from '@/services/{{ screen_name_lower }}Service';
+
+interface {{ screen_name }}State {
+  data: string | null;
+  isLoading: boolean;
+  error: string | null;
+  fetchData: () => Promise<void>;
+}
+
+const use{{ screen_name }}Store = create<{{ screen_name }}State>()(
+  devtools(
+    (set) => ({
+      data: null,
+      isLoading: false,
+      error: null,
+      fetchData: async () => {
+        set({isLoading: true, error: null});
+        try {
+          const data = await {{ screen_name }}Service.fetchData();
+          set({data, isLoading: false});
+        } catch (error) {
+          set({
+            error: error instanceof Error ? error.message : 'Unknown error',
+            isLoading: false,
+          });
+        }
+      },
+    }),
+    {name: '{{ screen_name }}Store'},
+  ),
+);
+
+export default use{{ screen_name }}Store; 

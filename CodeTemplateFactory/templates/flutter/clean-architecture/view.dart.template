@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '{{ screen_name }}_viewmodel.dart';
+
+class {{ screen_name }}View extends StatelessWidget {
+  const {{ screen_name }}View({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => {{ screen_name }}ViewModel(),
+      child: const _{{ screen_name }}ViewBody(),
+    );
+  }
+}
+
+class _{{ screen_name }}ViewBody extends StatelessWidget {
+  const _{{ screen_name }}ViewBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('{{ screen_name }}'),
+      ),
+      body: Consumer<{{ screen_name }}ViewModel>(
+        builder: (context, viewModel, child) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '{{ screen_name }} Screen',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                const SizedBox(height: 20),
+                if (viewModel.isLoading)
+                  const CircularProgressIndicator()
+                else if (viewModel.error != null)
+                  Text(
+                    viewModel.error!,
+                    style: const TextStyle(color: Colors.red),
+                  )
+                else
+                  Text(viewModel.data ?? 'No data'),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+} 
